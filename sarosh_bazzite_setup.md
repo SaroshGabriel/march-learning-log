@@ -1,5 +1,6 @@
-# Sarosh's Bazzite System — Setup Complete
+# Sarosh's Bazzite System — Setup Complete ✅
 **Generated March 2026 | VLSI/DFT + Embedded Systems Workstation**
+**Last verified: March 7, 2026 — all tools confirmed working**
 
 ---
 
@@ -24,11 +25,13 @@
 | OpenROAD | via container | Podman | Run via `openroad` alias |
 | OpenLane2 | 2.3.9 | Podman | Full PD flow container |
 | KLayout | 0.30.6 | pip | Layout viewer |
+| GTKWave | 3.3.125 | rpm-ostree | Waveform viewer for iverilog simulations |
 
 ### Aliases (in `~/.bashrc`)
 ```bash
 alias openroad="podman run --rm -it -v $(pwd):/work -w /work ghcr.io/efabless/openlane2:2.3.9 openroad"
 alias openlane="podman run --rm -it -v $(pwd):/work -w /work ghcr.io/efabless/openlane2:2.3.9 openlane"
+alias openroad-gui="podman run --rm -it -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $(pwd):/work -w /work ghcr.io/efabless/openlane2:2.3.9 openroad -gui"
 ```
 
 ---
@@ -43,6 +46,7 @@ alias openlane="podman run --rm -it -v $(pwd):/work -w /work ghcr.io/efabless/op
 | ESP-IDF | v6.1-dev | git install | ESP32 native toolchain |
 | esptool | 5.2.0 | pip | ESP32 flashing utility |
 | pyserial | 3.5 | pip | UART communication |
+| minicom | 2.10 | rpm-ostree | Serial terminal for AVR/ESP32 UART testing |
 
 ### ESP-IDF Path (in `~/.bashrc`)
 ```bash
@@ -194,8 +198,15 @@ yosys -p "read_verilog design.v; synth; dfflegalize; dfflibmap -liberty cells.li
 
 # Simulate with iverilog
 iverilog -o sim testbench.v design.v && vvp sim
+
+# View waveforms
+gtkwave dump.vcd
+
+# Serial terminal for AVR/ESP32 UART testing
+minicom -D /dev/ttyUSB0 -b 115200
 ```
 
 ---
 
-*Generated March 2026 | Bazzite GNOME NVIDIA | Tools: Yosys · iverilog · OpenROAD · ESP-IDF · avr-gcc · Python EDA stack*
+*Generated & verified March 7, 2026 | Bazzite GNOME NVIDIA 43.20260303 | All tools confirmed working*
+*Tools: Yosys · iverilog · GTKWave · OpenROAD · ESP-IDF v6.1 · avr-gcc · minicom · Python EDA stack · Tcl*
